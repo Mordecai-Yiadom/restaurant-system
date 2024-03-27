@@ -8,7 +8,7 @@ public class Main
                             DECLARING VARIABLES
          *********************************************************/
 
-        final int NUM_OF_ITERATIONS = 3;
+        final int NUM_OF_ITERATIONS = 3; //Number of Employees and Customer to be output
 
         final int CURRENT_YEAR = 2024;
         final int WEEKS_IN_YEAR = 52;
@@ -230,10 +230,77 @@ public class Main
             System.out.printf("Customer #3, Server #%d: ", i + 1);
             cus3Ratings[i] = scnr.nextFloat();
         }
+        
+
+        /*********************************************************
+                			 MANIPULATING INPUT
+         *********************************************************/
+
+        //Calculate Employee Financial Values
+        totalAnnualSalary = 0;
+        averageSalary = 0;
+
+        for (int i = 0; i < NUM_OF_ITERATIONS; i++) {
+            //Calc and Assign Employee Experience
+            empExperience[i] = CURRENT_YEAR - empYearOfHiring[i];
+
+            //Calc and Assign Employee Weekly Pay
+            empWeeklyPay[i] = empWageRate[i] * empWeeklyHours[i];
+
+            //Calc and Assign Employee Annual Salary
+            empAnnualSalary[i] = empWeeklyPay[i] * WEEKS_IN_YEAR;
+
+            //Calc and Assign Employee Annual Tax
+            empAnnualTax[i] = empAnnualSalary[i] * INCOME_TAX;
+
+            //Calc and Assign Employee NetIncome
+            empNetIncome[i] = empAnnualSalary[i] - empAnnualTax[i];
+
+            //Calculate Annual and Average Salary
+            totalAnnualSalary += empAnnualSalary[i];
+            averageSalary += empAnnualSalary[i];
+        }
+        //Finish Calculating Employee Average Salary
+        averageSalary /= NUM_OF_ITERATIONS;
+
+
+        //TODO make server ratings more modular || (better use of) arrays
+        //Calculate Server Rating Averages
+        for (int i = 0; i < 3; i++)
+            svrAverageRating[i] = (cus1Ratings[i] + cus2Ratings[i] + cus3Ratings[i]) / 3;
+
+
+        //Calculate Customer Financial Values
+        averageOrderTotal = 0;
+        averageTipTotal = 0;
+
+        for (int i = 0; i < NUM_OF_ITERATIONS; i++) {
+            //Calculate Customer Total Before Tax
+            cusTotalBeforeTax[i] = ordPizzaPrice[i] + priceOfDrinks[i];
+
+            //Calculate Customer Total Tax
+            cusTotalTax[i] = cusTotalBeforeTax[i] * SALES_TAX;
+
+            //Calculate Customer Total Tip
+            cusTotalTip[i] = cusTotalBeforeTax[i] * (ordTip[i] / 100);
+
+            //Calculate Customer Total After Tax (and Tip)
+            cusNetTotal[i] = cusTotalBeforeTax[i] + cusTotalTax[i] + cusTotalTip[i];
+
+            //Calculate Order and Tip Total Averages
+            averageOrderTotal += cusNetTotal[i];
+            averageTipTotal += cusTotalTip[i];
+        }
+        //Finish Calculating Average of Order and Tip Total
+        averageOrderTotal /= NUM_OF_ITERATIONS;
+        averageTipTotal /= NUM_OF_ITERATIONS;
+
+
+
 
 
         /***********************************************************************************
-                                     OUTPUT CHARTS
+                                     OUTPUT TO CONSOLE
          **********************************************************************************/
 
         //Print Employee Info
@@ -285,80 +352,6 @@ public class Main
         System.out.println("------------------------------------------------\n");
 
 
-
-
-        /*********************************************************
-                 CALCULATING Financial/Total Variables
-         *********************************************************/
-
-
-        //Calculate Employee Financial Values
-        totalAnnualSalary = 0;
-        averageSalary = 0;
-
-        for (int i = 0; i < NUM_OF_ITERATIONS; i++) {
-            //Calc and Assign Employee Experience
-            empExperience[i] = CURRENT_YEAR - empYearOfHiring[i];
-
-            //Calc and Assign Employee Weekly Pay
-            empWeeklyPay[i] = empWageRate[i] * empWeeklyHours[i];
-
-            //Calc and Assign Employee Annual Salary
-            empAnnualSalary[i] = empWeeklyPay[i] * WEEKS_IN_YEAR;
-
-            //Calc and Assign Employee Annual Tax
-            empAnnualTax[i] = empAnnualSalary[i] * INCOME_TAX;
-
-            //Calc and Assign Employee NetIncome
-            empNetIncome[i] = empAnnualSalary[i] - empAnnualTax[i];
-
-            //Calculate Annual and Average Salary
-            totalAnnualSalary += empAnnualSalary[i];
-            averageSalary += empAnnualSalary[i];
-        }
-        //Finish Calculating Employee Average Salary
-        averageSalary /= NUM_OF_ITERATIONS;
-
-
-
-        //TODO make server ratings more modular (i.e) arrays
-        //Calculate Server Rating Averages
-        for (int i = 0; i < 3; i++)
-            svrAverageRating[i] = (cus1Ratings[i] + cus2Ratings[i] + cus3Ratings[i]) / 3;
-
-
-        //Calculate Customer Financial Values
-        averageOrderTotal = 0;
-        averageTipTotal = 0;
-
-        for (int i = 0; i < NUM_OF_ITERATIONS; i++) {
-            //Calculate Customer Total Before Tax
-            cusTotalBeforeTax[i] = ordPizzaPrice[i] + priceOfDrinks[i];
-
-            //Calculate Customer Total Tax
-            cusTotalTax[i] = cusTotalBeforeTax[i] * SALES_TAX;
-
-            //Calculate Customer Total Tip
-            cusTotalTip[i] = cusTotalBeforeTax[i] * (ordTip[i] / 100);
-
-            //Calculate Customer Total After Tax (and Tip)
-            cusNetTotal[i] = cusTotalBeforeTax[i] + cusTotalTax[i] + cusTotalTip[i];
-
-            //Calculate Order and Tip Total Averages
-            averageOrderTotal += cusNetTotal[i];
-            averageTipTotal += cusTotalTip[i];
-        }
-        //Finish Calculating Average of Order and Tip Total
-        averageOrderTotal /= NUM_OF_ITERATIONS;
-        averageTipTotal /= NUM_OF_ITERATIONS;
-
-
-
-
-        /**********************************************************************************
-                  OUTPUT EMPLOYEE AND CUSTOMER FINANCIAL INFORMATION TO CONSOLE
-                    + Server Rating Averages
-         *********************************************************************************/
 
         //Print Employee Financial Info
         for(int i = 0; i < NUM_OF_ITERATIONS; i++)
